@@ -231,13 +231,77 @@ function renderTexto(perguntaObj) {
   input.type = "text";
   input.placeholder = perguntaObj.placeholder || "Digite aqui";
 
+  input.addEventListener("focus", () => {
+  setTimeout(() => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+  }, 300);
+});
+
+    if (perguntaObj.key === "cpf") {
+    input.addEventListener("input", (e) => {
+      let v = e.target.value.replace(/\D/g, "").slice(0, 11);
+
+      v = v.replace(/(\d{3})(\d)/, "$1.$2");
+      v = v.replace(/(\d{3})(\d)/, "$1.$2");
+      v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+      e.target.value = v;
+    });
+  }
+
+  if (perguntaObj.key === "data_nascimento") {
+    input.addEventListener("input", (e) => {
+      let v = e.target.value.replace(/\D/g, "").slice(0, 8);
+
+      v = v.replace(/(\d{2})(\d)/, "$1/$2");
+      v = v.replace(/(\d{2})(\d)/, "$1/$2");
+
+      e.target.value = v;
+    });
+  }
+
+  if (perguntaObj.key === "endereco") {
+  const helper = document.createElement("div");
+  helper.className = "helper-text";
+  helper.textContent = "Digite: rua, número, bairro e cidade.";
+  wrapper.appendChild(helper);
+}
+
   const btn = document.createElement("button");
   btn.className = "send-btn";
   btn.textContent = "Enviar";
 
-  function enviarTexto() {
+    function enviarTexto() {
     const valor = input.value.trim();
     if (!valor) return;
+
+    if (perguntaObj.key === "cpf") {
+      const apenasNumeros = valor.replace(/\D/g, "");
+      if (apenasNumeros.length !== 11) {
+        alert("Digite um CPF válido com 11 números.");
+        return;
+      }
+    }
+
+    if (perguntaObj.key === "data_nascimento") {
+      const formatoData = /^\d{2}\/\d{2}\/\d{4}$/;
+      if (!formatoData.test(valor)) {
+        alert("Digite a data no formato DD/MM/AAAA.");
+        return;
+      }
+    }
+
+    if (perguntaObj.key === "endereco") {
+      const partes = valor.split(",").map((item) => item.trim()).filter(Boolean);
+
+      if (partes.length < 4) {
+        alert("Digite o endereço completo com rua, número, bairro e cidade.");
+        return;
+      }
+    }
 
     respostas[perguntaObj.key] = valor;
     addMensagemUser(valor);
@@ -271,9 +335,16 @@ function renderTexto(perguntaObj) {
     inputArea.appendChild(wrapper);
 
   setTimeout(() => {
-    input.focus();
-    manterUltimaPerguntaVisivel();
-  }, 100);
+  input.focus();
+
+  setTimeout(() => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+  }, 300);
+
+}, 100);
 }
 
 function renderOpcoes(perguntaObj) {
