@@ -40,7 +40,7 @@ const perguntas = [
     key: "endereco",
     pergunta: "Endereço:",
     tipo: "texto",
-    placeholder: "Digite seu endereço completo (com rua, número, bairro, e cidade )"
+    placeholder: "Digite seu endereço completo (rua, número, bairro e cidade)"
   },
   {
     key: "qualidade_sono",
@@ -70,23 +70,13 @@ const perguntas = [
     key: "libido",
     pergunta: "Você gostaria de melhorar a sua libido (desejo sexual)?",
     tipo: "opcoes",
-    opcoes: [
-      "Sim",
-      "Não, estou satisfeito(a)"
-    ]
+    opcoes: ["Sim", "Não, estou satisfeito(a)"]
   },
   {
     key: "alergias",
     pergunta: "Qual das alergias abaixo você tem?",
     tipo: "opcoes",
-    opcoes: [
-      "Não tenho",
-      "Medicamentos",
-      "Alimentos",
-      "Poeira",
-      "Mofo",
-      "Outras"
-    ]
+    opcoes: ["Não tenho", "Medicamentos", "Alimentos", "Poeira", "Mofo", "Outras"]
   },
   {
     key: "exercicios",
@@ -232,21 +222,21 @@ function renderTexto(perguntaObj) {
   input.placeholder = perguntaObj.placeholder || "Digite aqui";
 
   input.addEventListener("focus", () => {
-  setTimeout(() => {
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: "smooth"
-    });
-  }, 300);
-});
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+    }, 300);
+  });
 
-    if (perguntaObj.key === "cpf") {
+  if (perguntaObj.key === "cpf") {
     input.addEventListener("input", (e) => {
       let v = e.target.value.replace(/\D/g, "").slice(0, 11);
 
-      v = v.replace(/(\d{3})(\d)/, "$1.$2");
-      v = v.replace(/(\d{3})(\d)/, "$1.$2");
-      v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+      if (v.length > 3) v = v.slice(0, 3) + "." + v.slice(3);
+      if (v.length > 7) v = v.slice(0, 7) + "." + v.slice(7);
+      if (v.length > 11) v = v.slice(0, 11) + "-" + v.slice(11);
 
       e.target.value = v;
     });
@@ -256,25 +246,18 @@ function renderTexto(perguntaObj) {
     input.addEventListener("input", (e) => {
       let v = e.target.value.replace(/\D/g, "").slice(0, 8);
 
-      v = v.replace(/(\d{2})(\d)/, "$1/$2");
-      v = v.replace(/(\d{2})(\d)/, "$1/$2");
+      if (v.length > 2) v = v.slice(0, 2) + "/" + v.slice(2);
+      if (v.length > 5) v = v.slice(0, 5) + "/" + v.slice(5);
 
       e.target.value = v;
     });
   }
 
-  if (perguntaObj.key === "endereco") {
-  const helper = document.createElement("div");
-  helper.className = "helper-text";
-  helper.textContent = "Digite: rua, número, bairro e cidade.";
-  wrapper.appendChild(helper);
-}
-
   const btn = document.createElement("button");
   btn.className = "send-btn";
   btn.textContent = "Enviar";
 
-    function enviarTexto() {
+  function enviarTexto() {
     const valor = input.value.trim();
     if (!valor) return;
 
@@ -295,7 +278,10 @@ function renderTexto(perguntaObj) {
     }
 
     if (perguntaObj.key === "endereco") {
-      const partes = valor.split(",").map((item) => item.trim()).filter(Boolean);
+      const partes = valor
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
 
       if (partes.length < 4) {
         alert("Digite o endereço completo com rua, número, bairro e cidade.");
@@ -321,30 +307,36 @@ function renderTexto(perguntaObj) {
   if (perguntaObj.key === "cpf") {
     const helper = document.createElement("div");
     helper.className = "helper-text";
-    helper.textContent = "Digite somente números ou no formato CPF.";
+    helper.textContent = "Digite o CPF completo. A formatação será feita automaticamente.";
     wrapper.appendChild(helper);
   }
 
   if (perguntaObj.key === "data_nascimento") {
     const helper = document.createElement("div");
     helper.className = "helper-text";
-    helper.textContent = "Use o formato DD/MM/AAAA.";
+    helper.textContent = "Digite a data no formato DD/MM/AAAA.";
     wrapper.appendChild(helper);
   }
 
-    inputArea.appendChild(wrapper);
+  if (perguntaObj.key === "endereco") {
+    const helper = document.createElement("div");
+    helper.className = "helper-text";
+    helper.textContent = "Digite: rua, número, bairro e cidade.";
+    wrapper.appendChild(helper);
+  }
+
+  inputArea.appendChild(wrapper);
 
   setTimeout(() => {
-  input.focus();
+    input.focus();
 
-  setTimeout(() => {
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: "smooth"
-    });
-  }, 300);
-
-}, 100);
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+    }, 300);
+  }, 100);
 }
 
 function renderOpcoes(perguntaObj) {
@@ -371,7 +363,7 @@ function renderOpcoes(perguntaObj) {
     grid.appendChild(btn);
   });
 
-    wrapper.appendChild(grid);
+  wrapper.appendChild(grid);
   inputArea.appendChild(wrapper);
 
   manterUltimaPerguntaVisivel();
@@ -450,7 +442,7 @@ function renderMultipla(perguntaObj) {
   helper.className = "helper-text";
   helper.textContent = "Você pode marcar mais de uma opção.";
 
-    wrapper.appendChild(grid);
+  wrapper.appendChild(grid);
   wrapper.appendChild(actions);
   wrapper.appendChild(helper);
 
@@ -545,9 +537,9 @@ async function finalizarFluxo() {
     }
   } catch (error) {
     success.innerHTML = `
-      <strong>Erro ao enviar a pré-consulta.</strong><br><br>
-      Verifique sua conexão e tente novamente.
-    `;
+        <strong>Erro ao enviar a pré-consulta.</strong><br><br>
+        Verifique sua conexão e tente novamente.
+      `;
     console.error("Erro ao enviar:", error);
   }
 
