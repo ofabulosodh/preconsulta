@@ -442,9 +442,25 @@ body {
   }
 
   .doctor-cutout {
-    width: 88vw;
-    max-height: 72vh;
-  }
+  width: 82vw;
+  max-height: 58vh;
+}
+
+#intro {
+  min-height: 72vh;
+}
+
+.hero-doctor {
+  align-items: flex-end;
+}
+
+.overlay {
+  bottom: 3vh;
+}
+
+.hero-copy {
+  gap: 6px;
+}
 
   .hero-name {
     font-size: 11px;
@@ -510,18 +526,27 @@ body {
     flex-direction: column;
   }
 
+  .text-input-wrap input {
+  font-size: 16px;
+}
+
+.chat-shell {
+  min-height: auto;
+}
+
   .send-btn {
     width: 100%;
     min-height: 52px;
   }
 
   #input-area {
-    padding: 10px;
-    padding-bottom: calc(10px + env(safe-area-inset-bottom));
-    max-height: 46vh;
-  }
+  padding: 10px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  max-height: 38vh;
+  overflow-y: auto;
+}
 
-  #chat {
-    padding-bottom: 240px;
-  }
+#chat {
+  padding-bottom: 300px;
+}
 }

@@ -204,6 +204,20 @@ function limparInputArea() {
   inputArea.innerHTML = "";
 }
 
+function manterUltimaPerguntaVisivel() {
+  setTimeout(() => {
+    const mensagensBot = chat.querySelectorAll(".message-row:not(.user-row)");
+    const ultimaPergunta = mensagensBot[mensagensBot.length - 1];
+
+    if (ultimaPergunta) {
+      ultimaPergunta.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  }, 250);
+}
+
 function renderTexto(perguntaObj) {
   limparInputArea();
 
@@ -254,9 +268,12 @@ function renderTexto(perguntaObj) {
     wrapper.appendChild(helper);
   }
 
-  inputArea.appendChild(wrapper);
+    inputArea.appendChild(wrapper);
 
-  setTimeout(() => input.focus(), 100);
+  setTimeout(() => {
+    input.focus();
+    manterUltimaPerguntaVisivel();
+  }, 100);
 }
 
 function renderOpcoes(perguntaObj) {
@@ -283,8 +300,10 @@ function renderOpcoes(perguntaObj) {
     grid.appendChild(btn);
   });
 
-  wrapper.appendChild(grid);
+    wrapper.appendChild(grid);
   inputArea.appendChild(wrapper);
+
+  manterUltimaPerguntaVisivel();
 }
 
 function renderMultipla(perguntaObj) {
@@ -360,11 +379,13 @@ function renderMultipla(perguntaObj) {
   helper.className = "helper-text";
   helper.textContent = "Você pode marcar mais de uma opção.";
 
-  wrapper.appendChild(grid);
+    wrapper.appendChild(grid);
   wrapper.appendChild(actions);
   wrapper.appendChild(helper);
 
   inputArea.appendChild(wrapper);
+
+  manterUltimaPerguntaVisivel();
 }
 
 function renderPerguntaAtual() {
@@ -404,7 +425,7 @@ async function finalizarFluxo() {
   const payload = {
     access_key: "9e0e1627-3956-401f-ab80-b8d416d9049f",
     subject: `Nova pré-consulta - ${respostas.nome_completo || "Paciente"}`,
-    from_name: " Formulario de pré-consulta",
+    from_name: "Formulario de pré-consulta",
     replyto: "SEUEMAILAQUI@gmail.com",
     nome_completo: respostas.nome_completo || "",
     cpf: respostas.cpf || "",
