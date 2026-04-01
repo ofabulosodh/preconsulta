@@ -42,12 +42,69 @@ const perguntas = [
     tipo: "texto",
     placeholder: "Digite seu endereço completo (rua, número, bairro e cidade)"
   },
+
+  {
+    key: "saude_hoje",
+    pergunta: "Como você avalia sua saúde hoje?",
+    tipo: "opcoes",
+    opcoes: ["Excelente", "Boa", "Regular", "Ruim", "Muito ruim"]
+  },
+  {
+    key: "satisfacao_saude",
+    pergunta: "Quão satisfeito(a) você está com a sua saúde?",
+    tipo: "opcoes",
+    opcoes: ["Muito satisfeito(a)", "Satisfeito(a)", "Mais ou menos", "Insatisfeito(a)", "Muito insatisfeito(a)"]
+  },
+  {
+    key: "acima_peso",
+    pergunta: "Você considera que está acima do peso?",
+    tipo: "opcoes",
+    opcoes: ["Sim", "Não"]
+  },
+  {
+    key: "dor_impede_rotina",
+    pergunta: "Em que medida você acha que sua dor física impede você de fazer o que você precisa?",
+    tipo: "opcoes",
+    opcoes: ["Nada", "Pouco", "Moderadamente", "Muito", "Extremamente"]
+  },
+  {
+    key: "tratamento_medico_vida_diaria",
+    pergunta: "Você precisa de algum tratamento médico para levar sua vida diária?",
+    tipo: "opcoes",
+    opcoes: ["Sim", "Não"]
+  },
+
   {
     key: "qualidade_sono",
     pergunta: "Como você avalia a qualidade do seu sono?",
     tipo: "opcoes",
     opcoes: ["Excelente", "Bom", "Regular", "Ruim"]
   },
+  {
+    key: "energia_dia_a_dia",
+    pergunta: "Você tem energia suficiente para o seu dia a dia?",
+    tipo: "opcoes",
+    opcoes: ["Sim", "Não"]
+  },
+  {
+    key: "aceitacao_aparencia",
+    pergunta: "Você é capaz de aceitar sua aparência física?",
+    tipo: "opcoes",
+    opcoes: ["Nunca", "Raramente", "Às vezes", "Frequentemente", "Sempre"]
+  },
+  {
+    key: "sono_avaliacao",
+    pergunta: "Como avalia seu sono?",
+    tipo: "opcoes",
+    opcoes: ["Excelente", "Bom", "Regular", "Ruim", "Muito ruim"]
+  },
+  {
+    key: "habitos_intestinais",
+    pergunta: "Como avalia seus hábitos intestinais?",
+    tipo: "opcoes",
+    opcoes: ["Excelente", "Bom", "Regular", "Ruim", "Muito ruim"]
+  },
+
   {
     key: "intestino",
     pergunta: "O seu intestino funciona bem? (Vai regularmente todos os dias ao banheiro)",
@@ -67,11 +124,66 @@ const perguntas = [
     opcoes: ["Excelente", "Bom", "Regular", "Ruim"]
   },
   {
+    key: "agua_diaria",
+    pergunta: "Você bebe pelo menos 2 litros de água diariamente?",
+    tipo: "opcoes",
+    opcoes: ["Sim", "Não"]
+  },
+  {
     key: "libido",
     pergunta: "Você gostaria de melhorar a sua libido (desejo sexual)?",
     tipo: "opcoes",
     opcoes: ["Sim", "Não, estou satisfeito(a)"]
   },
+  {
+    key: "libido_avaliacao",
+    pergunta: "Como avalia sua libido (desejo sexual)?",
+    tipo: "opcoes",
+    opcoes: ["Muito baixa", "Baixa", "Regular", "Boa", "Muito boa"]
+  },
+  {
+    key: "bebidas_alcoolicas",
+    pergunta: "Faz uso de bebidas alcoólicas?",
+    tipo: "opcoes",
+    opcoes: ["Nunca", "Raramente", "Às vezes", "Frequentemente", "Sempre"]
+  },
+  {
+    key: "precisa_emagrecer",
+    pergunta: "Você considera que precisa emagrecer e melhorar sua vida?",
+    tipo: "opcoes",
+    opcoes: ["Sim", "Não"]
+  },
+  {
+    key: "sentimentos_negativos",
+    pergunta: "Com que frequência você tem sentimentos negativos tais como mau humor, desespero, ansiedade, depressão?",
+    tipo: "opcoes",
+    opcoes: ["Nunca", "Raramente", "Às vezes", "Frequentemente", "Sempre"]
+  },
+  {
+    key: "satisfeita_composicao_corporal",
+    pergunta: "Você está satisfeita com sua composição corporal atual?",
+    tipo: "opcoes",
+    opcoes: ["Sim", "Não"]
+  },
+  {
+    key: "peso_aproximado",
+    pergunta: "Qual seu peso (aproximado) atualmente?",
+    tipo: "texto",
+    placeholder: "Ex.: 78 kg"
+  },
+  {
+    key: "altura",
+    pergunta: "Sua altura?",
+    tipo: "texto",
+    placeholder: "Ex.: 1,70 m"
+  },
+  {
+    key: "principal_problema_saude",
+    pergunta: "Qual seu principal problema de saúde?",
+    tipo: "texto",
+    placeholder: "Digite aqui"
+  },
+
   {
     key: "alergias",
     pergunta: "Qual das alergias abaixo você tem?",
@@ -489,18 +601,41 @@ async function finalizarFluxo() {
     access_key: "9e0e1627-3956-401f-ab80-b8d416d9049f",
     subject: `Nova pré-consulta - ${respostas.nome_completo || "Paciente"}`,
     from_name: "Formulario de pré-consulta",
-    replyto: "SEUEMAILAQUI@gmail.com",
+    replyto: "EMAIL_DO_CLIENTE_AQUI@gmail.com",
+
     nome_completo: respostas.nome_completo || "",
     cpf: respostas.cpf || "",
     data_nascimento: respostas.data_nascimento || "",
     profissao: respostas.profissao || "",
     estado_civil: respostas.estado_civil || "",
     endereco: respostas.endereco || "",
+
+    saude_hoje: respostas.saude_hoje || "",
+    satisfacao_saude: respostas.satisfacao_saude || "",
+    acima_peso: respostas.acima_peso || "",
+    dor_impede_rotina: respostas.dor_impede_rotina || "",
+    tratamento_medico_vida_diaria: respostas.tratamento_medico_vida_diaria || "",
+
     qualidade_sono: respostas.qualidade_sono || "",
+    energia_dia_a_dia: respostas.energia_dia_a_dia || "",
+    aceitacao_aparencia: respostas.aceitacao_aparencia || "",
+    sono_avaliacao: respostas.sono_avaliacao || "",
+    habitos_intestinais: respostas.habitos_intestinais || "",
+
     intestino: respostas.intestino || "",
     disposicao: respostas.disposicao || "",
     humor: respostas.humor || "",
+    agua_diaria: respostas.agua_diaria || "",
     libido: respostas.libido || "",
+    libido_avaliacao: respostas.libido_avaliacao || "",
+    bebidas_alcoolicas: respostas.bebidas_alcoolicas || "",
+    precisa_emagrecer: respostas.precisa_emagrecer || "",
+    sentimentos_negativos: respostas.sentimentos_negativos || "",
+    satisfeita_composicao_corporal: respostas.satisfeita_composicao_corporal || "",
+    peso_aproximado: respostas.peso_aproximado || "",
+    altura: respostas.altura || "",
+    principal_problema_saude: respostas.principal_problema_saude || "",
+
     alergias: respostas.alergias || "",
     exercicios: respostas.exercicios || "",
     fumantes: respostas.fumantes || "",
