@@ -93,12 +93,6 @@ const perguntas = [
     opcoes: ["Nunca", "Raramente", "Às vezes", "Frequentemente", "Sempre"]
   },
   {
-    key: "sono_avaliacao",
-    pergunta: "Como avalia seu sono?",
-    tipo: "opcoes",
-    opcoes: ["Excelente", "Bom", "Regular", "Ruim", "Muito ruim"]
-  },
-  {
     key: "habitos_intestinais",
     pergunta: "Como avalia seus hábitos intestinais?",
     tipo: "opcoes",
@@ -619,7 +613,6 @@ async function finalizarFluxo() {
     qualidade_sono: respostas.qualidade_sono || "",
     energia_dia_a_dia: respostas.energia_dia_a_dia || "",
     aceitacao_aparencia: respostas.aceitacao_aparencia || "",
-    sono_avaliacao: respostas.sono_avaliacao || "",
     habitos_intestinais: respostas.habitos_intestinais || "",
 
     intestino: respostas.intestino || "",
