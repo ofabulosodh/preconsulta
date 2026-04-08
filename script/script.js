@@ -37,6 +37,12 @@ const perguntas = [
     opcoes: ["Solteiro(a)", "Casado(a)", "Divorciado(a)", "Viúvo(a)"]
   },
   {
+    key: "apoio_decisao_saude",
+    pergunta: "Quem costuma te ajudar a tomar decisões sobre sua saúde? (Ex.: minha mãe, meu marido, etc.)",
+    tipo: "texto",
+    placeholder: "Digite aqui"
+  },
+  {
     key: "endereco",
     pergunta: "Endereço:",
     tipo: "texto",
@@ -602,6 +608,7 @@ async function finalizarFluxo() {
     data_nascimento: respostas.data_nascimento || "",
     profissao: respostas.profissao || "",
     estado_civil: respostas.estado_civil || "",
+    apoio_decisao_saude: respostas.apoio_decisao_saude || "",
     endereco: respostas.endereco || "",
 
     saude_hoje: respostas.saude_hoje || "",
